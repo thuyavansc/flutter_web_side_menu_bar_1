@@ -16,8 +16,7 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 
-![img.png](./readme_doc/img.png)
+UI details fro this Branch
+![img_2.png](./readme_doc/img_3.png)
 
-![img_1.png](./readme_doc/img_1.png)
-
-![img_2.png](./readme_doc/img_2.png)
+![img_2.png](./readme_doc/img_4.png)
