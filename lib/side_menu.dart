@@ -845,18 +845,103 @@ import 'package:provider/provider.dart';
 
 
 
-class ProviderApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ChangeNotifierProvider(
-        create: (context) => MenuProvider(),
-        child: MainLayout(),
-      ),
-    );
-  }
-}
 
+//Nested menu
+// class ProviderApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: ChangeNotifierProvider(
+//         create: (context) => MenuProvider(),
+//         child: MainLayout(),
+//       ),
+//     );
+//   }
+// }
+//
+// // class MainLayout extends StatelessWidget {
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return Scaffold(
+// //       body: Row(
+// //         children: [
+// //           Consumer<MenuProvider>(
+// //             builder: (context, provider, child) {
+// //               if (!provider.sidebarVisible) return Container(); // If sidebar is toggled off, return an empty container.
+// //               return Row(
+// //                 children: [
+// //                   Container(
+// //                     width: 100,
+// //                     color: Colors.black,
+// //                     child: ListView(
+// //                       children: provider.menus.map((menu) => IconButton(
+// //                         icon: Icon(menu.icon, color: Colors.white),
+// //                         onPressed: () => provider.selectRootMenu(menu),
+// //                       )).toList(),
+// //                     ),
+// //                   ),
+// //                   if (provider.isSecondTierVisible) VerticalDivider(width: 1),
+// //                   if (provider.isSecondTierVisible)
+// //                     Container(
+// //                       width: 200,
+// //                       color: Colors.grey[850],
+// //                       child: Column(
+// //                         children: [
+// //                           ListTile(
+// //                             leading: Icon(Icons.arrow_back, color: Colors.white),
+// //                             title: Text(provider.currentMenuTitle, style: TextStyle(color: Colors.white)),
+// //                             onTap: () => provider.navigateBack(),
+// //                           ),
+// //                           Expanded(
+// //                             child: ListView(
+// //                               children: provider.currentSubMenuItems.map((sub) => ListTile(
+// //                                 leading: Icon(sub.icon, color: Colors.white),
+// //                                 title: Text(sub.title, style: TextStyle(color: Colors.white)),
+// //                                 onTap: () => provider.selectSubMenu(sub),
+// //                               )).toList(),
+// //                             ),
+// //                           ),
+// //                         ],
+// //                       ),
+// //                     ),
+// //                 ],
+// //               );
+// //             },
+// //           ),
+// //           Expanded(
+// //             child: Column(
+// //               children: [
+// //                 Container(
+// //                   color: Colors.blueGrey[100],
+// //                   width: double.infinity,
+// //                   padding: EdgeInsets.all(10),
+// //                   child: Row(
+// //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// //                     children: [
+// //                       IconButton(
+// //                         icon: Icon(Icons.menu),
+// //                         onPressed: () => Provider.of<MenuProvider>(context, listen: false).toggleSidebar(),
+// //                       ),
+// //                       Text("Your Application"),
+// //                     ],
+// //                   ),
+// //                 ),
+// //                 Expanded(child: Center(child: Text('Main Content Area'))),
+// //                 Container(
+// //                   color: Colors.blueGrey[100],
+// //                   width: double.infinity,
+// //                   padding: EdgeInsets.all(20),
+// //                   child: Text('Footer', textAlign: TextAlign.center),
+// //                 ),
+// //               ],
+// //             ),
+// //           ),
+// //         ],
+// //       ),
+// //     );
+// //   }
+// // }
+//
 // class MainLayout extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
@@ -865,44 +950,47 @@ class ProviderApp extends StatelessWidget {
 //         children: [
 //           Consumer<MenuProvider>(
 //             builder: (context, provider, child) {
-//               if (!provider.sidebarVisible) return Container(); // If sidebar is toggled off, return an empty container.
-//               return Row(
-//                 children: [
-//                   Container(
-//                     width: 100,
-//                     color: Colors.black,
-//                     child: ListView(
-//                       children: provider.menus.map((menu) => IconButton(
-//                         icon: Icon(menu.icon, color: Colors.white),
-//                         onPressed: () => provider.selectRootMenu(menu),
-//                       )).toList(),
-//                     ),
-//                   ),
-//                   if (provider.isSecondTierVisible) VerticalDivider(width: 1),
-//                   if (provider.isSecondTierVisible)
+//               // Only render the sidebar if the sidebarVisible flag is true
+//               return Visibility(
+//                 visible: provider.sidebarVisible,
+//                 child: Row(
+//                   children: [
 //                     Container(
-//                       width: 200,
-//                       color: Colors.grey[850],
-//                       child: Column(
-//                         children: [
-//                           ListTile(
-//                             leading: Icon(Icons.arrow_back, color: Colors.white),
-//                             title: Text(provider.currentMenuTitle, style: TextStyle(color: Colors.white)),
-//                             onTap: () => provider.navigateBack(),
-//                           ),
-//                           Expanded(
-//                             child: ListView(
-//                               children: provider.currentSubMenuItems.map((sub) => ListTile(
-//                                 leading: Icon(sub.icon, color: Colors.white),
-//                                 title: Text(sub.title, style: TextStyle(color: Colors.white)),
-//                                 onTap: () => provider.selectSubMenu(sub),
-//                               )).toList(),
-//                             ),
-//                           ),
-//                         ],
+//                       width: 100,
+//                       color: Colors.black,
+//                       child: ListView(
+//                         children: provider.menus.map((menu) => IconButton(
+//                           icon: Icon(menu.icon, color: Colors.white),
+//                           onPressed: () => provider.selectRootMenu(menu),
+//                         )).toList(),
 //                       ),
 //                     ),
-//                 ],
+//                     if (provider.isSecondTierVisible) VerticalDivider(width: 1),
+//                     if (provider.isSecondTierVisible)
+//                       Container(
+//                         width: 200,
+//                         color: Colors.grey[850],
+//                         child: Column(
+//                           children: [
+//                             ListTile(
+//                               leading: Icon(Icons.arrow_back, color: Colors.white),
+//                               title: Text(provider.currentMenuTitle, style: TextStyle(color: Colors.white)),
+//                               onTap: () => provider.navigateBack(),
+//                             ),
+//                             Expanded(
+//                               child: ListView(
+//                                 children: provider.currentSubMenuItems.map((sub) => ListTile(
+//                                   leading: Icon(sub.icon, color: Colors.white),
+//                                   title: Text(sub.title, style: TextStyle(color: Colors.white)),
+//                                   onTap: () => provider.selectSubMenu(sub),
+//                                 )).toList(),
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                   ],
+//                 ),
 //               );
 //             },
 //           ),
@@ -918,7 +1006,7 @@ class ProviderApp extends StatelessWidget {
 //                     children: [
 //                       IconButton(
 //                         icon: Icon(Icons.menu),
-//                         onPressed: () => Provider.of<MenuProvider>(context, listen: false).toggleSidebar(),
+//                         onPressed: () => Provider.of<MenuProvider>(context, listen: false).toggleFullSidebar(),
 //                       ),
 //                       Text("Your Application"),
 //                     ],
@@ -939,6 +1027,89 @@ class ProviderApp extends StatelessWidget {
 //     );
 //   }
 // }
+//
+// class MenuProvider extends ChangeNotifier {
+//   List<Menu> menus = [
+//     Menu(title: 'Settings', icon: Icons.settings, subMenus: [
+//       Menu(title: 'General', icon: Icons.tune),
+//       Menu(title: 'Billing', icon: Icons.credit_card, subMenus: [
+//         Menu(title: 'Billing History', icon: Icons.history),
+//         Menu(title: 'Payment Info', icon: Icons.payment, subMenus: [
+//           Menu(title: 'Cash', icon: Icons.money),
+//           Menu(title: 'Card', icon: Icons.add_card),
+//         ]),
+//       ]),
+//       Menu(title: 'Security', icon: Icons.security),
+//     ]),
+//     Menu(title: 'Profile', icon: Icons.person, subMenus: [
+//       Menu(title: 'Account Info', icon: Icons.account_circle),
+//       Menu(title: 'Change Password', icon: Icons.lock),
+//     ]),
+//     Menu(title: 'APIs', icon: Icons.api),
+//   ];
+//
+//   bool sidebarVisible = true;
+//   List<Menu> menuStack = [];
+//
+//   Menu? get currentMenu => menuStack.isNotEmpty ? menuStack.last : null;
+//   String get currentMenuTitle => currentMenu?.title ?? 'Root';
+//   List<Menu> get currentSubMenuItems => currentMenu?.subMenus ?? [];
+//
+//   bool get isSecondTierVisible => sidebarVisible && currentMenu != null;
+//
+//   void toggleFullSidebar() {
+//     sidebarVisible = !sidebarVisible;
+//     notifyListeners();
+//   }
+//
+//
+//   void selectRootMenu(Menu menu) {
+//     menuStack.clear();
+//     menuStack.add(menu);
+//     notifyListeners();
+//   }
+//
+//   void selectSubMenu(Menu submenu) {
+//     if (submenu.subMenus.isNotEmpty) {
+//       menuStack.add(submenu);
+//       notifyListeners();
+//     }
+//   }
+//
+//   void navigateBack() {
+//     if (menuStack.isNotEmpty) {
+//       menuStack.removeLast();
+//       notifyListeners();
+//     }
+//     //This will hide both tier if nothing is back
+//     // if (menuStack.isEmpty) {
+//     //   sidebarVisible = false;  // Optionally hide the sidebar when reaching the root
+//     // }
+//   }
+// }
+//
+// class Menu {
+//   String title;
+//   IconData icon;
+//   List<Menu> subMenus;
+//
+//   Menu({required this.title, required this.icon, this.subMenus = const []});
+// }
+
+
+
+
+class ProviderApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: ChangeNotifierProvider(
+        create: (context) => MenuProvider(),
+        child: MainLayout(),
+      ),
+    );
+  }
+}
 
 class MainLayout extends StatelessWidget {
   @override
@@ -948,7 +1119,6 @@ class MainLayout extends StatelessWidget {
         children: [
           Consumer<MenuProvider>(
             builder: (context, provider, child) {
-              // Only render the sidebar if the sidebarVisible flag is true
               return Visibility(
                 visible: provider.sidebarVisible,
                 child: Row(
@@ -957,10 +1127,7 @@ class MainLayout extends StatelessWidget {
                       width: 100,
                       color: Colors.black,
                       child: ListView(
-                        children: provider.menus.map((menu) => IconButton(
-                          icon: Icon(menu.icon, color: Colors.white),
-                          onPressed: () => provider.selectRootMenu(menu),
-                        )).toList(),
+                        children: provider.menus.map((menu) => MenuButton(menu: menu, onSelect: () => provider.selectRootMenu(menu))).toList(),
                       ),
                     ),
                     if (provider.isSecondTierVisible) VerticalDivider(width: 1),
@@ -971,17 +1138,21 @@ class MainLayout extends StatelessWidget {
                         child: Column(
                           children: [
                             ListTile(
-                              leading: Icon(Icons.arrow_back, color: Colors.white),
-                              title: Text(provider.currentMenuTitle, style: TextStyle(color: Colors.white)),
-                              onTap: () => provider.navigateBack(),
+                              // leading: Icon(Icons.arrow_back, color: Colors.white),
+                              leading: IconButton(
+                                hoverColor: Colors.green.shade300.withOpacity(0.5),
+                                icon: Icon(Icons.arrow_back, color: Colors.white),
+                                  //onPressed: (){},
+                                  onPressed: () => provider.navigateBack(),
+                                      // () => Provider.of<MenuProvider>(context, listen: false).toggleFullSidebar(),
+                                ),
+                              title: Text(provider.currentMenuTitle, style: TextStyle(color: Colors.green.shade300)),
+                              // onTap: () => provider.navigateBack(),
+                              onTap: (){},
                             ),
                             Expanded(
                               child: ListView(
-                                children: provider.currentSubMenuItems.map((sub) => ListTile(
-                                  leading: Icon(sub.icon, color: Colors.white),
-                                  title: Text(sub.title, style: TextStyle(color: Colors.white)),
-                                  onTap: () => provider.selectSubMenu(sub),
-                                )).toList(),
+                                children: provider.currentSubMenuItems.map((sub) => SubMenuButton(subMenu: sub, onSelect: () => provider.selectSubMenu(sub))).toList(),
                               ),
                             ),
                           ],
@@ -995,28 +1166,9 @@ class MainLayout extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                Container(
-                  color: Colors.blueGrey[100],
-                  width: double.infinity,
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.menu),
-                        onPressed: () => Provider.of<MenuProvider>(context, listen: false).toggleFullSidebar(),
-                      ),
-                      Text("Your Application"),
-                    ],
-                  ),
-                ),
+                AppBarWidget(),
                 Expanded(child: Center(child: Text('Main Content Area'))),
-                Container(
-                  color: Colors.blueGrey[100],
-                  width: double.infinity,
-                  padding: EdgeInsets.all(20),
-                  child: Text('Footer', textAlign: TextAlign.center),
-                ),
+                FooterWidget(),
               ],
             ),
           ),
@@ -1026,8 +1178,132 @@ class MainLayout extends StatelessWidget {
   }
 }
 
+class MenuButton extends StatefulWidget {
+  final Menu menu;
+  final VoidCallback onSelect;
+
+  const MenuButton({Key? key, required this.menu, required this.onSelect}) : super(key: key);
+
+  @override
+  _MenuButtonState createState() => _MenuButtonState();
+}
+
+class _MenuButtonState extends State<MenuButton> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (event) => setState(() => _isHovered = true),
+      onExit: (event) => setState(() => _isHovered = false),
+      child: InkWell(
+        onTap: widget.onSelect,
+        child: Container(
+          margin: _isHovered ? EdgeInsets.symmetric(horizontal: 10) : null,
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: _isHovered ? Colors.grey[850] : Colors.transparent, // Change color on hover
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 10,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Icon(widget.menu.icon, color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
+class SubMenuButton extends StatefulWidget {
+  final Menu subMenu;
+  final VoidCallback onSelect;
+
+  const SubMenuButton({Key? key, required this.subMenu, required this.onSelect}) : super(key: key);
+
+  @override
+  _SubMenuButtonState createState() => _SubMenuButtonState();
+}
+
+class _SubMenuButtonState extends State<SubMenuButton> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (event) => setState(() => _isHovered = true),
+      onExit: (event) => setState(() => _isHovered = false),
+      child: InkWell(
+        onTap: widget.onSelect,
+        child: Container(
+          margin: _isHovered ? EdgeInsets.symmetric(horizontal: 5) : null,
+          decoration: BoxDecoration(
+            color: _isHovered ? Colors.black.withOpacity(0.5) : Colors.grey[850],  // Hover color change
+            borderRadius: BorderRadius.circular(10),
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: Colors.black.withOpacity(0.5),
+            //     spreadRadius: 1,
+            //     blurRadius: 10,
+            //     offset: Offset(0, 3),
+            //   ),
+            // ],
+          ),
+          child: ListTile(
+            leading: Icon(widget.subMenu.icon, color: Colors.white),
+            title: Text(widget.subMenu.title, style: TextStyle(color: Colors.white, ), ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class AppBarWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.blueGrey[100],
+      width: double.infinity,
+      padding: EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () => Provider.of<MenuProvider>(context, listen: false).toggleFullSidebar(),
+          ),
+          Text("Your Application"),
+        ],
+      ),
+    );
+  }
+}
+
+class FooterWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.blueGrey[100],
+      width: double.infinity,
+      padding: EdgeInsets.all(20),
+      child: Text('Footer', textAlign: TextAlign.center),
+    );
+  }
+}
+
 class MenuProvider extends ChangeNotifier {
-  List<Menu> menus = [
+  bool sidebarVisible = true;
+  List<Menu> menuStack = [];
+
+    List<Menu> menus = [
     Menu(title: 'Settings', icon: Icons.settings, subMenus: [
       Menu(title: 'General', icon: Icons.tune),
       Menu(title: 'Billing', icon: Icons.credit_card, subMenus: [
@@ -1046,20 +1322,16 @@ class MenuProvider extends ChangeNotifier {
     Menu(title: 'APIs', icon: Icons.api),
   ];
 
-  bool sidebarVisible = true;
-  List<Menu> menuStack = [];
-
   Menu? get currentMenu => menuStack.isNotEmpty ? menuStack.last : null;
   String get currentMenuTitle => currentMenu?.title ?? 'Root';
   List<Menu> get currentSubMenuItems => currentMenu?.subMenus ?? [];
 
-  bool get isSecondTierVisible => sidebarVisible && currentMenu != null;
+  bool get isSecondTierVisible => currentMenu != null && currentMenu!.subMenus.isNotEmpty;
 
   void toggleFullSidebar() {
     sidebarVisible = !sidebarVisible;
     notifyListeners();
   }
-
 
   void selectRootMenu(Menu menu) {
     menuStack.clear();
@@ -1079,10 +1351,6 @@ class MenuProvider extends ChangeNotifier {
       menuStack.removeLast();
       notifyListeners();
     }
-    //This will hide both tier if nothing is back
-    // if (menuStack.isEmpty) {
-    //   sidebarVisible = false;  // Optionally hide the sidebar when reaching the root
-    // }
   }
 }
 

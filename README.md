@@ -28,6 +28,9 @@ https://dribbble.com/shots/21271774-Dual-tier-sidebar-navigation-Untitled-UI
 https://dribbble.com/shots/20082889-Dual-tier-sidebar-navigation-Untitled-UI
 
 UI details fro this Branch
+![img_2.png](./readme_doc/img_5.png)
+
 ![img_2.png](./readme_doc/img_3.png)
 
 ![img_2.png](./readme_doc/img_4.png)
+
